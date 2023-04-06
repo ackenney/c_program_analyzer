@@ -15,6 +15,9 @@ const int KEYWORD_TABLE_LENGTH = 27;
 
 //Prototypes
 void getInput(vector<string>& x, ifstream& inFile);
+void removeComments(vector<string>& x, string key[]);
+void createIDTable(vector<string> in, string key[], vector<string>& out);
+
 
 int main()
 {
@@ -48,8 +51,10 @@ int main()
 		std::cout << "Error opening file:\n";
 	}
 
-	// get input
+	// get input -> strip comments -> make ID table
 	getInput(inputVector, inFile);
+	removeComments(inputVector, keywordArray);
+	createIDTable(inputVector, keywordArray, IDTableVector);
 	
 	// Closing i/o files files
 	inFile.close();
@@ -113,3 +118,95 @@ void getInput(vector<string>& x, ifstream& inFile)
 	}
 
 }//End of gitInput
+
+void removeComments(vector<string> &x, string key[])
+{
+	// Declaring temp  vector
+	vector<string> tempVector;
+
+	for (unsigned int i = 0; i < x.size(); i++)
+	{
+		// loop	until you reach the opening comment
+		if (x.at(i) == key[25]) // key[25] == "/*" from the keyword table
+		{
+			// loop	until you reach the end comment
+			while (x.at(i) != key[26]) // key[26] == "*/" from the keyword table
+			{
+				i = i + 1; // Adding 1 to the index
+			}
+		}
+		else 
+		{
+			// pushing the value to the temp vector
+			tempVector.push_back(x.at(i));
+		}
+	}
+
+	//Returning the vector with the input without comments
+	x = tempVector;
+} // End of removeComments function
+
+void createIDTable(vector<string> in, string key[], vector<string>& out)
+{
+	// Declaring variables
+	vector<string> idVector;
+	string tempString = "";
+	char   tempChar;
+	bool  idBool;
+
+	// Looping until end of input
+	for (unsigned int i = 0; i < in.size(); i++)
+	{
+		// Getting one string at at time
+		tempString = in.at(i);
+
+		for (unsigned int j = 0; j < tempString.size(); j++)
+		{
+			// Reading one char from string
+			tempChar = tempString[j];
+
+			if ((tempChar >= 'a' && tempChar <= 'z'))
+			{
+				// if char is a letter then it is currently an id
+				idBool = true;
+			}
+			else
+			{
+				// If char is not a letter it can't be an id
+				idBool = false;
+				break;
+			}
+
+		}
+
+		// Checking if the string is a key word
+		for (int k = 0; k < KEYWORD_TABLE_LENGTH; k++)
+		{
+			if (tempString == key[k])
+			{
+				// if string is a keyword then it can't be an id
+				idBool = false;
+			}
+		}
+
+		// Checking if it was an already added id
+		for (unsigned int i = 0; i < idVector.size(); i++)
+		{
+			if (tempString == idVector.at(i))
+			{
+				idBool = false;
+			}
+		}
+
+		// Pushing the string to the vector if the string is an id and not a keyword
+		if (idBool == true)
+		{
+			idVector.push_back(tempString);
+		}
+
+	}
+
+	out = idVector; // Returning keyword vector
+
+	return;
+}// End of createIDTable function
