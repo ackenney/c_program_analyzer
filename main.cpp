@@ -17,6 +17,7 @@ const int KEYWORD_TABLE_LENGTH = 27;
 void getInput(vector<string>& x, ifstream& inFile);
 void removeComments(vector<string>& x, string key[]);
 void createIDTable(vector<string> in, string key[], vector<string>& out);
+void createNumberTable(vector<string> in, string key[], vector<string>& out);
 
 
 int main()
@@ -55,6 +56,7 @@ int main()
 	getInput(inputVector, inFile);
 	removeComments(inputVector, keywordArray);
 	createIDTable(inputVector, keywordArray, IDTableVector);
+	createNumberTable(inputVector, keywordArray, numberTableVector);
 	
 	// Closing i/o files files
 	inFile.close();
@@ -210,3 +212,70 @@ void createIDTable(vector<string> in, string key[], vector<string>& out)
 
 	return;
 }// End of createIDTable function
+
+void createNumberTable(vector<string> in, string key[], vector<string>& out)
+{
+	// Declaring variables
+	vector<string> numVector;
+	string tempString = "";
+	char   tempChar;
+	bool  numBool;
+
+	// Looping until end of input
+	for (unsigned int i = 0; i < in.size(); i++)
+	{
+		// Getting one string at at time
+		tempString = in.at(i);
+
+		for (unsigned int j = 0; j < tempString.size(); j++)
+		{
+			// Getting one char at at time
+			tempChar = tempString[j];
+
+			// If the char is a num it could be an id
+			if (tempChar >= '0' && tempChar <= '9')
+			{
+				numBool = true;
+			}
+			else
+			{
+				// if any character is not a num then it can't be a num
+				numBool = false;
+				break;
+			}
+
+		}
+
+		// Checking to make sure string is not a keyword
+		for (int k = 0; k < KEYWORD_TABLE_LENGTH; k++)
+		{
+			if (tempString == key[k])
+			{
+				numBool = false;
+			}
+		}
+
+		// Checking to make sure the string is not an already added num
+		for (unsigned int i = 0; i < numVector.size(); i++)
+		{
+			if (tempString == numVector.at(i))
+			{
+				numBool = false;
+			}
+		}
+
+		// Pushing num to vector if it is a num
+		if (numBool == true)
+		{
+			numVector.push_back(tempString);
+		}
+
+	}
+
+	out = numVector;  // Returning num table
+
+	return;
+
+} //End of number table function
+
+
