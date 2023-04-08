@@ -18,6 +18,7 @@ void getInput(vector<string>& x, ifstream& inFile);
 void removeComments(vector<string>& x, string key[]);
 void createIDTable(vector<string> in, string key[], vector<string>& out);
 void createNumberTable(vector<string> in, string key[], vector<string>& out);
+void getTokens(string key[], vector<string> ID, vector<string> num, vector<string> in, ofstream& outFile);
 
 
 int main()
@@ -52,11 +53,12 @@ int main()
 		std::cout << "Error opening file:\n";
 	}
 
-	// get input -> strip comments -> make ID table
+	// get input -> strip comments -> make ID table -> make number table -> make tokens table
 	getInput(inputVector, inFile);
 	removeComments(inputVector, keywordArray);
 	createIDTable(inputVector, keywordArray, IDTableVector);
 	createNumberTable(inputVector, keywordArray, numberTableVector);
+	getTokens(keywordArray, IDTableVector, numberTableVector, inputVector, outFile);
 	
 	// Closing i/o files files
 	inFile.close();
@@ -277,5 +279,73 @@ void createNumberTable(vector<string> in, string key[], vector<string>& out)
 	return;
 
 } //End of number table function
+
+void getTokens(string key[], vector<string> ID, vector<string> num, vector<string> in, ofstream& outFile)
+{
+	// Declaring variables
+	string tempString;
+
+	// Output header to console
+	std::cout << "\n-------------------------------------\n"
+		<< "Token Table\n"
+		<< "-------------------------------------\n";
+	std::cout << "Token\t class\t Index\n\n";
+
+	// Output header to file
+	outFile << "\n-------------------------------------\n"
+		<< "Token Table\n"
+		<< "-------------------------------------\n";
+	outFile << "Token\t class\t Index\n\n";
+
+	// Looping to check all input
+	for (unsigned int i = 0; i < in.size(); i++)
+	{
+		// Temp holds value to be checked 
+		tempString = in.at(i);
+
+		// Checking table to see if value is an id
+		for (unsigned int z = 0; z < ID.size(); z++)
+		{
+			if (tempString == ID.at(z))
+			{
+				// Output token to console
+				std::cout << ID.at(z) << " \t id  \t " << z + 1 << std::endl;
+
+				// Output token to file
+				outFile << ID.at(z) << " \t id  \t " << z + 1 << std::endl;
+			}
+		}
+
+		// Checking table to see if value is a keyword
+		for (int j = 0; j < KEYWORD_TABLE_LENGTH; j++)
+		{
+			if (tempString == key[j])
+			{
+				// Output token to console
+				std::cout << key[j] << " \t kw  \t " << j + 1 << std::endl;
+
+				// Output token to file
+				outFile << key[j] << " \t kw  \t " << j + 1 << std::endl;
+			}
+		}
+
+		// Checking table to see if value is a num
+		for (unsigned int p = 0; p < num.size(); p++)
+		{
+			if (tempString == num.at(p))
+			{
+				// Output token to console
+				std::cout << num.at(p) << " \t num  \t " << p + 1 << std::endl;
+
+				// Output token to file
+				outFile << num.at(p) << " \t num  \t " << p + 1 << std::endl;
+			}
+		}
+	}
+
+	return;
+
+} // End of getTokens function
+
 
 
