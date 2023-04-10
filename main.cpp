@@ -19,6 +19,7 @@ void removeComments(vector<string>& x, string key[]);
 void createIDTable(vector<string> in, string key[], vector<string>& out);
 void createNumberTable(vector<string> in, string key[], vector<string>& out);
 void getTokens(string key[], vector<string> ID, vector<string> num, vector<string> in, ofstream& outFile);
+void print(string key[], vector<string> in, vector<string> ID, vector<string> num, ofstream& outFile);
 
 
 int main()
@@ -41,10 +42,10 @@ int main()
 							  "(", ")" , "[" , "]" , "{" , "}" , "/*" , "*/" };
 
 	
-	std::cout << "Enter file name: "; std::cin >> fileName;
+	//std::cout << "Enter file name: "; std::cin >> fileName;
 	
 	// Opening files
-	inFile.open(fileName);
+	inFile.open("input1.txt");
 	outFile.open("output.txt");
 
 	// Checking if the files opened
@@ -53,11 +54,12 @@ int main()
 		std::cout << "Error opening file:\n";
 	}
 
-	// get input -> strip comments -> make ID table -> make number table -> make tokens table
+	// get input -> strip comments -> make ID table -> make number table -> print table ->make tokens table
 	getInput(inputVector, inFile);
 	removeComments(inputVector, keywordArray);
 	createIDTable(inputVector, keywordArray, IDTableVector);
 	createNumberTable(inputVector, keywordArray, numberTableVector);
+	print(keywordArray, inputVector, IDTableVector, numberTableVector, outFile);
 	getTokens(keywordArray, IDTableVector, numberTableVector, inputVector, outFile);
 	
 	// Closing i/o files files
@@ -286,15 +288,15 @@ void getTokens(string key[], vector<string> ID, vector<string> num, vector<strin
 	string tempString;
 
 	// Output header to console
-	std::cout << "\n-------------------------------------\n"
+	std::cout << "\n--------------------------------------------------------------------------\n"
 		<< "Token Table\n"
-		<< "-------------------------------------\n";
+		<< "--------------------------------------------------------------------------\n";
 	std::cout << "Token\t class\t Index\n\n";
 
 	// Output header to file
-	outFile << "\n-------------------------------------\n"
+	outFile << "\n--------------------------------------------------------------------------\n"
 		<< "Token Table\n"
-		<< "-------------------------------------\n";
+		<< "--------------------------------------------------------------------------\n";
 	outFile << "Token\t class\t Index\n\n";
 
 	// Looping to check all input
@@ -322,10 +324,10 @@ void getTokens(string key[], vector<string> ID, vector<string> num, vector<strin
 			if (tempString == key[j])
 			{
 				// Output token to console
-				std::cout << key[j] << " \t kw  \t " << j + 1 << std::endl;
+				std::cout << key[j] << " \t key  \t " << j + 1 << std::endl;
 
 				// Output token to file
-				outFile << key[j] << " \t kw  \t " << j + 1 << std::endl;
+				outFile << key[j] << " \t key  \t " << j + 1 << std::endl;
 			}
 		}
 
@@ -346,6 +348,105 @@ void getTokens(string key[], vector<string> ID, vector<string> num, vector<strin
 	return;
 
 } // End of getTokens function
+
+void print(string key[], vector<string> in, vector<string> ID, vector<string> num, ofstream& outFile)
+{
+
+	// Output to console
+	std::cout << "--------------------------------------------------------------------------\n"
+		<< "Input program without comments\n"
+		<< "--------------------------------------------------------------------------";
+
+	// Output to file
+	outFile << "--------------------------------------------------------------------------\n"
+		<< "Input program without comments\n"
+		<< "--------------------------------------------------------------------------";
+
+	// loop prints input without comments
+	for (unsigned int i = 0; i < in.size(); i++)
+	{
+		// Output to console
+		std::cout << in.at(i);
+
+		// Output to file
+		outFile << in.at(i);
+	}
+
+
+	// Output to console
+	std::cout << "\n\n--------------------------------------------------------------------------\n"
+		<< "Keyword Table\n"
+		<< "--------------------------------------------------------------------------\n";
+
+	std::cout << "Keyword\t  Index\n\n";
+
+	// Output to file
+	outFile << "\n\n--------------------------------------------------------------------------\n"
+		<< "Keyword Table\n"
+		<< "--------------------------------------------------------------------------\n";
+
+	outFile << "Keyword\t  Index\n\n";
+
+	// Loop prints keyword table
+	for (int j = 0; j < KEYWORD_TABLE_LENGTH; j++)
+	{
+		// Output to console
+		std::cout << key[j] << "\t  " << j + 1 << std::endl;
+
+		// Output to console
+		outFile << key[j] << "\t  " << j + 1 << std::endl;
+	}
+
+
+	// Output to console
+	std::cout << "\n--------------------------------------------------------------------------\n"
+		<< "ID Table\n"
+		<< "--------------------------------------------------------------------------\n";
+	std::cout << "ID\t  Index\n\n";
+
+	// Output to file
+	outFile << "\n--------------------------------------------------------------------------\n"
+		<< "ID Table\n"
+		<< "-------------------------------------\n";
+	outFile << "ID\t  Index\n\n";
+
+	// Loop prints id table
+	for (unsigned int k = 0; k < ID.size(); k++)
+	{
+		// Output to console
+		std::cout << ID.at(k) << "\t  " << k + 1 << std::endl;
+
+		// Output to file
+		outFile << ID.at(k) << "\t  " << k + 1 << std::endl;
+
+	}
+
+	// Output to console
+	std::cout << "\n--------------------------------------------------------------------------\n"
+		<< "Number Table\n"
+		<< "--------------------------------------------------------------------------\n";
+	std::cout << "Number\t  Index\n\n";
+
+	// Output to file
+	outFile << "\n--------------------------------------------------------------------------\n"
+		<< "Numuber Table\n"
+		<< "--------------------------------------------------------------------------\n";
+	outFile << "Number\t  Index\n\n";
+
+	// loop prints num table
+	for (unsigned int z = 0; z < num.size(); z++)
+	{
+		// Output to console
+		std::cout << num.at(z) << "\t  " << z + 1 << std::endl;
+
+		// Output to file
+		outFile << num.at(z) << "\t  " << z + 1 << std::endl;
+
+	}
+
+	return;
+
+} // End of function
 
 
 
