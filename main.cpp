@@ -42,10 +42,10 @@ int main()
 							  "(", ")" , "[" , "]" , "{" , "}" , "/*" , "*/" };
 
 	
-	//std::cout << "Enter file name: "; std::cin >> fileName;
+	std::cout << "Enter file name: "; std::cin >> fileName;
 	
 	// Opening files
-	inFile.open("input1.txt");
+	inFile.open(fileName);
 	outFile.open("output.txt");
 
 	// Checking if the files opened
@@ -391,10 +391,10 @@ void print(string key[], vector<string> in, vector<string> ID, vector<string> nu
 	for (int j = 0; j < KEYWORD_TABLE_LENGTH; j++)
 	{
 		// Output to console
-		std::cout << key[j] << "\t  " << j + 1 << std::endl;
+		std::cout << key[j] << "\t   " << j + 1 << std::endl;
 
 		// Output to console
-		outFile << key[j] << "\t  " << j + 1 << std::endl;
+		outFile << key[j] << "\t   " << j + 1 << std::endl;
 	}
 
 

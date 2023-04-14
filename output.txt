@@ -1,0 +1,145 @@
+--------------------------------------------------------------------------
+Input program without comments
+--------------------------------------------------------------------------
+
+int gcd ( int u , int v )
+{ if ( v == 0 ) return u ; 
+  else return gcd ( v , u - u / v * v ) ;
+  
+}
+
+void main ( void )
+{ int x ; int y ;   
+  x = input ( ) ; y = input ( ) ;
+  output ( gcd ( x , y ) ) ;
+}
+
+--------------------------------------------------------------------------
+Keyword Table
+--------------------------------------------------------------------------
+Keyword	  Index
+
+else	   1
+if	   2
+int	   3
+return	   4
+void	   5
+while	   6
++	   7
+-	   8
+*	   9
+/	   10
+<	   11
+<=	   12
+>	   13
+>=	   14
+==	   15
+!=	   16
+=	   17
+;	   18
+,	   19
+(	   20
+)	   21
+[	   22
+]	   23
+{	   24
+}	   25
+/*	   26
+*/	   27
+
+--------------------------------------------------------------------------
+ID Table
+-------------------------------------
+ID	  Index
+
+gcd	  1
+u	  2
+v	  3
+main	  4
+x	  5
+y	  6
+input	  7
+output	  8
+
+--------------------------------------------------------------------------
+Numuber Table
+--------------------------------------------------------------------------
+Number	  Index
+
+0	  1
+
+--------------------------------------------------------------------------
+Token Table
+--------------------------------------------------------------------------
+Token	 class	 Index
+
+int 	 key  	 3
+gcd 	 id  	 1
+( 	 key  	 20
+int 	 key  	 3
+u 	 id  	 2
+, 	 key  	 19
+int 	 key  	 3
+v 	 id  	 3
+) 	 key  	 21
+{ 	 key  	 24
+if 	 key  	 2
+( 	 key  	 20
+v 	 id  	 3
+== 	 key  	 15
+0 	 num  	 1
+) 	 key  	 21
+return 	 key  	 4
+u 	 id  	 2
+; 	 key  	 18
+else 	 key  	 1
+return 	 key  	 4
+gcd 	 id  	 1
+( 	 key  	 20
+v 	 id  	 3
+, 	 key  	 19
+u 	 id  	 2
+- 	 key  	 8
+u 	 id  	 2
+/ 	 key  	 10
+v 	 id  	 3
+* 	 key  	 9
+v 	 id  	 3
+) 	 key  	 21
+; 	 key  	 18
+} 	 key  	 25
+void 	 key  	 5
+main 	 id  	 4
+( 	 key  	 20
+void 	 key  	 5
+) 	 key  	 21
+{ 	 key  	 24
+int 	 key  	 3
+x 	 id  	 5
+; 	 key  	 18
+int 	 key  	 3
+y 	 id  	 6
+; 	 key  	 18
+x 	 id  	 5
+= 	 key  	 17
+input 	 id  	 7
+( 	 key  	 20
+) 	 key  	 21
+; 	 key  	 18
+y 	 id  	 6
+= 	 key  	 17
+input 	 id  	 7
+( 	 key  	 20
+) 	 key  	 21
+; 	 key  	 18
+output 	 id  	 8
+( 	 key  	 20
+gcd 	 id  	 1
+( 	 key  	 20
+x 	 id  	 5
+, 	 key  	 19
+y 	 id  	 6
+) 	 key  	 21
+) 	 key  	 21
+; 	 key  	 18
+} 	 key  	 25
